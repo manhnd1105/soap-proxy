@@ -1,0 +1,119 @@
+<html>
+<header>
+    <script type="text/javascript">
+    function createSubmission(){
+        var user = "manhnd";
+        var pass = "123456";
+        var xmlhttp = window.XMLHttpRequest?new XMLHttpRequest():new ActiveXObject("Microsoft.XMLHTTP");
+        //Assign callback for request
+        xmlhttp.onreadystatechange = createSumission_callback;
+        xmlhttp.onerror = function(e) {
+            alert("Error ocurred. Error = " + e.message);
+        }
+        xmlhttp.ontimeout = function(e) {
+            alert("Timeout error!");
+        }
+        //Connect request to URL
+        xmlhttp.open('POST', 'soap-proxy.php', true);
+        //xmlhttp.open('POST', 'http://localhost/index.php', true);
+        //Build HTTP request content
+        var sourceCode = document.getElementById('SourceCode').value;
+        var testreq =
+            "<?xml version=\"1.0\" encoding=\"UTF-8\" standalone=\"no\"?>"+
+            "<SOAP-ENV:Envelope "+
+            "xmlns:SOAP-ENV=\"http://schemas.xmlsoap.org/soap/envelope/\" "+
+            "xmlns:tns=\"http://ideone.com:80/api/1/service\" "+
+            "xmlns:soap=\"http://schemas.xmlsoap.org/wsdl/soap/\" "+
+            "xmlns:xsd=\"http://www.w3.org/2001/XMLSchema\" "+
+            "xmlns:wsdl=\"http://schemas.xmlsoap.org/wsdl/\" "+
+            "xmlns:soap-enc=\"http://schemas.xmlsoap.org/soap/encoding/\" "+
+            "xmlns:xsi=\"http://www.w3.org/2001/XMLSchema-instance\" >"+
+                "<SOAP-ENV:Body>"+
+                    "<mns:createSubmission "+
+                    "xmlns:mns=\"http://ideone.com:80/api/1/service\" "+
+                    "SOAP-ENV:encodingStyle=\"http://schemas.xmlsoap.org/soap/encoding/\">"+
+                        "<user xsi:type=\"xsd:string\">" + user + "</user>"+
+                        "<pass xsi:type=\"xsd:string\">" + pass + "</pass>"+
+                        "<sourceCode xsi:type=\"xsd:string\">" + sourceCode + "</sourceCode>"+
+                        "<language xsi:type=\"xsd:int\">29</language>"+
+                        "<input xsi:type=\"xsd:string\"></input>"+
+                        "<run xsi:type=\"xsd:boolean\">1</run>"+
+                        "<private xsi:type=\"xsd:boolean\">1</private>"+
+                    "</mns:createSubmission>"+
+                "</SOAP-ENV:Body>"+
+            "</SOAP-ENV:Envelope>";
+        // Send request
+        xmlhttp.setRequestHeader('Content-Type', 'text/xml');
+        //xmlhttp.setRequestHeader('SOAPAction', 'http://ideone.com:80/api/1/service');
+        xmlhttp.send(testreq);
+        //alert(req);
+    }
+    function createSumission_callback(){
+        if (xmlhttp.readyState == 4 && xmlhttp.status == 200){
+            alert(xmlhttp.responseXML);
+            //var link = xmlhttp.responseXML.getElementsByTagName("value")[1].childNodes[0].nodeValue;
+            //getSubmissionDetails(link);
+        }
+        
+    }
+    function getSubmissionDetails_callback(){
+        
+    }
+    function getSubmissionDetails(link){
+        var xmlhttp = window.XMLHttpRequest?new XMLHttpRequest():new ActiveXObject("Microsoft.XMLHTTP");
+        xmlhttp.onreadystatechange = getSubmissionDetails_callback;
+        xmlhttp.open('POST', 'http://ideone.com:80/api/1/service', true);
+        var getSubmissionDetailsRequest =
+            "<?xml version=\"1.0\" encoding=\"UTF-8\" standalone=\"no\"?>"+
+            "<SOAP-ENV:Envelope "+
+            "xmlns:SOAP-ENV=\"http://schemas.xmlsoap.org/soap/envelope/\" "+
+            "xmlns:tns=\"http://ideone.com:80/api/1/service\" "+
+            "xmlns:soap=\"http://schemas.xmlsoap.org/wsdl/soap/\" "+
+            "xmlns:xsd=\"http://www.w3.org/2001/XMLSchema\" "+
+            "xmlns:wsdl=\"http://schemas.xmlsoap.org/wsdl/\" "+
+            "xmlns:soap-enc=\"http://schemas.xmlsoap.org/soap/encoding/\" "+
+            "xmlns:xsi=\"http://www.w3.org/2001/XMLSchema-instance\" >"+
+                "<SOAP-ENV:Body>"+
+                    "<mns:getSubmissionDetails "+
+                        "xmlns:mns=\"http://ideone.com:80/api/1/service\" "+
+                        "SOAP-ENV:encodingStyle=\"http://schemas.xmlsoap.org/soap/encoding/\">"+
+                        "<user xsi:type=\"xsd:string\">manhnd</user>"+
+                        "<pass xsi:type=\"xsd:string\">123456</pass>"+
+                        "<link xsi:type=\"xsd:string\">" + link + "</link>"+
+                        "<withSource xsi:type=\"xsd:boolean\">1</withSource>"+
+                        "<withInput xsi:type=\"xsd:boolean\">1</withInput>"+
+                        "<withOutput xsi:type=\"xsd:boolean\">1</withOutput>"+
+                        "<withStderr xsi:type=\"xsd:boolean\">1</withStderr>"+
+                        "<withCmpinfo xsi:type=\"xsd:boolean\">1</withCmpinfo>"+
+                    "</mns:getSubmissionDetails>"+
+                "</SOAP-ENV:Body>"+
+            "</SOAP-ENV:Envelope>";
+    }
+    
+                /*
+var req = "<?xml version=\"1.0\" encoding=\"utf-8\"?>" +
+"<soap:Envelope " +
+"xmlns:xsi=\"http://www.w3.org/2001/XMLSchema-instance\" " +
+"xmlns:xsd=\"http://www.w3.org/2001/XMLSchema\" " +
+"xmlns:soap=\"http://schemas.xmlsoap.org/soap/envelope/\">" +
+"<soap:Body xmlns:mns=\"http://ideone.com:80/api/1/service\">" +
+"<mns:createSubmission>" +
+"<user>manhnd</user>" +
+"<pass>123456</pass>" +
+"<soureCode>" + sourceCode + "</soureCode>" +
+"<language>29</language>" +
+"<input></input>" +
+"<run>1</run>" +
+"<privte>1</private>" +
+"</mns:createSubmission></soap:Body></soap:Envelope>";
+*/
+    </script>
+</header>
+<body>
+    <button name="test" onclick="createSubmission(); return false;">See result</button>
+    <textarea id="SourceCode" name="SourceCode"></textarea>
+    <div id="result">Result</div>
+</body>
+</html>
+
+
