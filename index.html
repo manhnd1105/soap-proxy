@@ -71,7 +71,7 @@
                     data: { request: soapRequest, endPoint: soapEndPoint, header: soapHeader },
                     error: function(soapResponse) {
                         $('#results').html('<p>Failure.</p>');
-                        alert(soapResponse.responseXML);
+                        alert(soapResponse.responseText);
                     },
                     success: function(soapResponse) {
                         $('#results').html('<p>' + $(soapResponse).text() + '</p>');

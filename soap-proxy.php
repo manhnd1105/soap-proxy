@@ -17,7 +17,7 @@
     curl_setopt($soapAction, CURLOPT_HTTPHEADER,     $header);
 
     $xmlReturn = curl_exec($soapAction);
-    print_r($xmlReturn);
+    //print_r($xmlReturn);
     return $xmlReturn;
     curl_close($soapAction);
 
