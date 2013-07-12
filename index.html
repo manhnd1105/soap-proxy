@@ -11,25 +11,22 @@
     <script src="//ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.min.js"></script>
 </head>
 <body>
-    <form action="soap-proxy.php" id="formDemo">
-        <input type="text" name="formField" id="formField" />
-        <input type="submit" id="formSubmit" value="Search" />
-    </form>
+    <textarea id="SourceCode" name="source"></textarea>
+    <button id="btnSubmit">OK</button>
     <div id="results"></div>
     <script>
         $(document).ready(function() {
-            $('#formDemo').submit(function(e) {
-                // prevent default form submission action
-                e.preventDefault();
-                var sourceCode = $('#formField').val();
+            $('#btnSubmit').click(function() {
+                var sourceCode = $('#SourceCode').val();
                 $.ajax({
-                    url: 'myproxy.php',
+                    url: 'proxy-service.php',
                     type: "POST",
                     dataType: "xml",
-                    data: { 'sourceCode': sourceCode },
+                    data: { source: sourceCode },
                     error: function(soapResponse) {
-                        $('#results').html('<p>Failure.</p>');
-                        alert(soapResponse.responseText);
+                        $('#results').html(soapResponse.responseText);
+                        //alert('Response Text: ' + soapResponse.responseText);
+                        //alert('Response XML: ' + soapResponse.responseXML);
                     },
                     success: function(soapResponse) {
                         $('#results').html('<p>' + $(soapResponse).text() + '</p>');
