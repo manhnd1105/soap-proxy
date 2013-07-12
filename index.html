@@ -19,56 +19,14 @@
     <script>
         $(document).ready(function() {
             $('#formDemo').submit(function(e) {
-
                 // prevent default form submission action
                 e.preventDefault();
-            var submitUrl = $(this).attr('action');
-                // 1. set up our soap request
-                // 2. set up our soap request headers
-                // 3. set up the end point of our soap request
-                /*
-                var soapRequest = '<?xml version="1.0" encoding="utf-8"?><soap:Envelope xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:soap="http://schemas.xmlsoap.org/soap/envelope/"><soap:Body><GetDistricts xmlns="http://api.example.com/endpoint/"><strEncryptedAuthKey>KEYNEEDEDHERE</strEncryptedAuthKey><inAddr><Zip>' + zip5 + '</Zip><ZipExt>' + zipPlus4 + '</ZipExt></inAddr></GetDistricts></soap:Body></soap:Envelope>',
-                    soapEndPoint = 'http://api.example.com/endpoint/',
-                    soapHeader = ['Host: api.example.com',
-                                  'Content-type: text/xml; charset=utf-8',
-                                  'Content-length: ' + soapRequest.length,
-                                  'SoapAction: http://api.example.com/endpoint/action'];
-                */
                 var sourceCode = $('#formField').val();
-                var soapRequest =             
-                    "<?xml version=\"1.0\" encoding=\"UTF-8\" standalone=\"no\"?>"+
-                    "<SOAP-ENV:Envelope "+
-                    "xmlns:SOAP-ENV=\"http://schemas.xmlsoap.org/soap/envelope/\" "+
-                    "xmlns:tns=\"http://ideone.com:80/api/1/service\" "+
-                    "xmlns:soap=\"http://schemas.xmlsoap.org/wsdl/soap/\" "+
-                    "xmlns:xsd=\"http://www.w3.org/2001/XMLSchema\" "+
-                    "xmlns:wsdl=\"http://schemas.xmlsoap.org/wsdl/\" "+
-                    "xmlns:soap-enc=\"http://schemas.xmlsoap.org/soap/encoding/\" "+
-                    "xmlns:xsi=\"http://www.w3.org/2001/XMLSchema-instance\" >"+
-                        "<SOAP-ENV:Body>"+
-                            "<mns:createSubmission "+
-                            "xmlns:mns=\"http://ideone.com:80/api/1/service\" "+
-                            "SOAP-ENV:encodingStyle=\"http://schemas.xmlsoap.org/soap/encoding/\">"+
-                                "<user xsi:type=\"xsd:string\">" + "manhnd" + "</user>"+
-                                "<pass xsi:type=\"xsd:string\">" + "123456" + "</pass>"+
-                                "<sourceCode xsi:type=\"xsd:string\">" + sourceCode + "</sourceCode>"+
-                                "<language xsi:type=\"xsd:int\">29</language>"+
-                                "<input xsi:type=\"xsd:string\"></input>"+
-                                "<run xsi:type=\"xsd:boolean\">1</run>"+
-                                "<private xsi:type=\"xsd:boolean\">1</private>"+
-                            "</mns:createSubmission>"+
-                        "</SOAP-ENV:Body>"+
-                    "</SOAP-ENV:Envelope>",
-                    soapEndPoint = 'http://ideone.com:80/api/1/service',
-                    soapHeader = 'Content-type: text/xml; charset=utf-8';
-                // make our POST request to the proxy
-                // your request will look similar, but you will need to set up how it should behave when you get data back/have an error 
-                
                 $.ajax({
-                    url: submitUrl,
+                    url: 'myproxy.php',
                     type: "POST",
                     dataType: "xml",
-                    data: { request: soapRequest, endPoint: soapEndPoint, header: soapHeader },
+                    data: { 'sourceCode': sourceCode },
                     error: function(soapResponse) {
                         $('#results').html('<p>Failure.</p>');
                         alert(soapResponse.responseText);
