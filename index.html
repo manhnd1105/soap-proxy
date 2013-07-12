@@ -11,22 +11,24 @@
     <script src="//ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.min.js"></script>
 </head>
 <body>
+    <p>Input</p>
     <textarea id="SourceCode" name="source"></textarea>
-    <button id="btnSubmit">OK</button>
+    <p><button id="btnSubmit">Get compiled result</button></p>
+    <p>Output</p>
     <div id="results"></div>
     <script>
         $(document).ready(function() {
             $('#btnSubmit').click(function() {
                 var sourceCode = $('#SourceCode').val();
+                var language = 29;
                 $.ajax({
                     url: 'proxy-service.php',
                     type: "POST",
                     dataType: "xml",
-                    data: { source: sourceCode },
+                    data: { source: sourceCode, lang: language },
                     error: function(soapResponse) {
                         $('#results').html(soapResponse.responseText);
-                        //alert('Response Text: ' + soapResponse.responseText);
-                        //alert('Response XML: ' + soapResponse.responseXML);
+                        alert(soapResponse.responseText);
                     },
                     success: function(soapResponse) {
                         $('#results').html('<p>' + $(soapResponse).text() + '</p>');
