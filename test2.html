@@ -1,0 +1,41 @@
+<html>
+<header>
+    <script type="text/javascript">
+            function createSubmisson() {
+                
+                var xmlhttp = window.XMLHttpRequest?new XMLHttpRequest():new ActiveXObject("Microsoft.XMLHTTP");
+                xmlhttp.onreadystatechange = function() {
+                    if (xmlhttp.readyState == 4 && xmlhttp.status == 200){
+                    $('#results').html(xmlhttp.responseText);
+                    alert(xmlhttp.responseText);
+                }
+                };
+                xmlhttp.onerror = function(e) {
+                    alert("Error ocurred. Error = " + e.message);
+                }
+                xmlhttp.ontimeout = function(e) {
+                    alert("Timeout error!");
+                }
+                //Connect request to URL
+                xmlhttp.open('POST', 'proxy-service.php', false);
+                var sourceCode = document.getElementById('SourceCode').value;
+                var language = 29;
+                // Send request
+                xmlhttp.setRequestHeader("Content-Type", "application/json;charset=UTF-8");
+                xmlhttp.send({ source: sourceCode, lang: language });
+                
+               alert("aaa");
+            }
+        
+    </script>
+</header>
+<body>
+    <p>Input</p>
+    <textarea id="SourceCode" name="source"></textarea>
+    <p><button id="btnSubmit" onclick="createSubmisson();">Get compiled result</button></p>
+    <p>Output</p>
+    <div id="results"></div>
+</body>
+</html>
+
+
