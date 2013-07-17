@@ -22,16 +22,17 @@
                 var sourceCode = $('#SourceCode').val();
                 var language = 29;
                 $.ajax({
-                    url: 'http://manhnd.byethost15.com/index.php',
+                    url: 'proxy-service.php',
+                    //url: 'http://localhost/php-proxy-service/proxy-service.php',
+                    //url: 'http://php-proxy.herokuapp.com/index.php',
                     type: "POST",
-                    dataType: "xml",
+                    dataType: "json",
                     data: { source: sourceCode, lang: language },
-                    error: function(soapResponse) {
-                        $('#results').html(soapResponse.responseText);
-                        alert(soapResponse.responseText);
+                    error: function(soapResponse) {                
+                        $('#results').html(soapResponse.output);
                     },
-                    success: function(soapResponse) {
-                        $('#results').html('<p>' + $(soapResponse).text() + '</p>');
+                    success: function(soapResponse) {                
+                        $('#results').html(soapResponse.output);
                     }
                 });
 
